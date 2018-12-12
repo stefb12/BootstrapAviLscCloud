@@ -1,0 +1,27 @@
+---
+- hosts: se
+  become: true
+  become_user: root
+  become_method: sudo
+
+  vars_files:
+    - "vars/creds.yml"
+
+
+  tasks:
+  - name: copy keys for avi controller
+    copy:
+      src: "{{ IdRsaFile }}"
+      dest: .ssh/{{ IdRsaFileBaseName }}
+
+  - name: sudo curl command for the controller
+    become: true
+    shell: |
+      curl -ks https://"{{avi_credentials.controller}}":443/api/linux_host_install?username=avi | sudo bash
+
+    register: shellvalue
+
+
+  - name: show output
+    debug:
+      var: shellvalue.stdout

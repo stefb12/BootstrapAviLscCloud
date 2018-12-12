@@ -1,0 +1,54 @@
+---
+- hosts: localhost
+  connection: local
+
+
+  vars_files:
+    - "vars/creds.yml"
+    - "vars/se.yml"
+
+
+  roles:
+    - role: "avinetworks.avisdk"
+
+  tasks:
+
+    - name: Modify Default Cloud with Linux Cloud
+      avi_cloud:
+        avi_api_update_method: patch
+        avi_api_patch_op: add
+        username: '{{ avi_credentials.username }}'
+        controller: '{{ avi_credentials.controller }}'
+        password: '{{ avi_credentials.password }}'
+        api_version: '{{ avi_credentials.api_version }}'
+        vtype: CLOUD_LINUXSERVER
+        license_tier: ENTERPRISE_18
+        enable_vip_static_routes: false
+        ip6_autocfg_enabled: false
+        tenant_ref: /api/tenant/?name={{ AviSeTenant }}
+        dhcp_enabled: false
+        linuxserver_configuration:
+          se_sys_disk_size_GB: 10
+          se_log_disk_size_GB: 5
+          se_inband_mgmt: false
+          hosts:
+          - host_attr:
+            - attr_key: CPU
+              attr_val: '{{ AviSeCpu }}'
+            - attr_key: MEMORY
+              attr_val: '{{ AviSeMem }}'
+            - attr_key: DPDK
+              attr_val: '{{ AviSeDpdk }}'
+            - attr_key: SE_INBAND_MGMT
+              attr_val: 'False'
+            host_ip:
+              type: V4
+              addr: '{{ item }}'
+          ssh_user_ref: /api/cloudconnectoruser/?name={{ AviSeUsername }}
+        prefer_static_routes: false
+        license_type: LIC_CORES
+        mtu: 1500
+        apic_mode: false
+        state_based_dns_registration: true
+        name: Default-Cloud
+      loop: "{{ SeList }}"

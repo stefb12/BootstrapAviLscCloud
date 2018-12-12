@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars_files:
+    - "vars/creds.yml"
+
+  vars:
+    SeSshKey: "{{ lookup('file', '{{ IdRsaFile }}') }}"
+
+  roles:
+    - role: "avinetworks.avisdk"
+
+  tasks:
+
+  - name: Update user password
+    avi_useraccount:
+      controller: "{{avi_credentials.controller}}"
+      username: "{{avi_credentials.username}}"
+      password: "{{avi_credentials.password}}"
+      old_password: 58NFaGDJm(PJH0G
+      api_version: "{{avi_credentials.api_version}}"
+
+  - name: Create a Cloud connector user
+    avi_cloudconnectoruser:
+      controller: "{{avi_credentials.controller}}"
+      username: "{{avi_credentials.username}}"
+      password: "{{avi_credentials.password}}"
+      api_version: "{{avi_credentials.api_version}}"
+      private_key: "{{ SeSshKey }}"
+      name: avi
