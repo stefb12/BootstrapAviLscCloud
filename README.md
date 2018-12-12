@@ -1,4 +1,10 @@
 # BootstrapAviLscCloud
+Prerequisites:
+- Make sure Ansible is installed
+- Make sure the Avi SDK is installed:
+	++ pip install avisdk --upgrade
+        ++ ansible-galaxy install -f avinetworks.avisdk
+
 Use the bash script to:
 - create a hosts file (for Ansible)
 - create a vars/creds.yml file (to connect to the Avi Controller REST API via Ansible)
@@ -30,3 +36,7 @@ A file ($4) needs to be define with the IPs of the SE: One IP per line
 more se.txt
 192.168.17.152
 192.168.17.153
+
+Script has been tested against:
+- Avi 18.1.3
+- Ansible 2.7.0
