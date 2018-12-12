@@ -5,7 +5,7 @@ Use the bash script to:
 - create a vars/se.yml file (it creates a list of SE to feed the Cloud config based of the file in $4)
 - Bootstrap the Avi controller with a new password ($2)
 - copy the ssh keys to the SEs in order to allow the controller to connect
-- configure a new Linux cloud with the new SEs
+- modified the default cloud as a Linux cloud with the new SEs
 
 Example:
 ./BootstrapAviLscCloud.sh 192.168.17.151 Avi_2018 18.1.3 se.txt avi avi123
