@@ -16,7 +16,7 @@ AviSeTenant="admin"
 #
 #
 #
-mkdir vars
+mkdir vars 2>/dev/null
 IdRsaFileBaseName=`basename /home/avi/ssh/id_rsa`
 echo "# This file has been generated automatically
 avi_credentials:
@@ -46,14 +46,15 @@ echo "
     ansible_ssh_pass: $AviSePassword
     ansible_become_pass: $AviSePassword" >> hosts
 while true
-do nc -z -v -w5 $AviControllerIp 443
+do nc -z -v -w5 $AviControllerIp 443 2>/dev/null
   if [ "$?" -eq 0 ]
   then
     echo 'controller is ready'
     break
+    echo '#########################'
   fi
-  echo 'controller is not ready'
-  sleep 10
+  echo 'controller is not ready, waiting for 20 seconds..'
+  sleep 20
 done
 
 ansible-playbook --extra-vars="IdRsaFile=$IdRsaFile" BootstrapAviLscCloud.yml
