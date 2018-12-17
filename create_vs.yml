@@ -6,10 +6,10 @@
     app_name: app1
   
   vars_files:
-    - "/home/avi/ansible/avi/vars/creds.yml"
+    - vars/creds.yml
 
   roles:
-    - role: "avinetworks.avisdk"
+    - role: avinetworks.avisdk
   
   tasks:
     - name: Setting up Application

@@ -1,15 +1,14 @@
+# ansible-playbook create_avi_lsc_user.yml
 ---
 - hosts: localhost
   connection: local
 
-
   vars_files:
-    - "vars/creds.yml"
-    - "vars/se.yml"
-
+    - vars/creds.yml
+    - vars/se.yml
 
   roles:
-    - role: "avinetworks.avisdk"
+    - role: avinetworks.avisdk
 
   tasks:
 
@@ -44,11 +43,11 @@
             host_ip:
               type: V4
               addr: '{{ item }}'
-          ssh_user_ref: /api/cloudconnectoruser/?name={{ AviSeUsername }}
+          ssh_user_ref: /api/cloudconnectoruser/?name={{ SEuser }}
         prefer_static_routes: false
         license_type: LIC_CORES
         mtu: 1500
         apic_mode: false
         state_based_dns_registration: true
-        name: Default-Cloud
+        name: "{{ AviCloudName }}"
       loop: "{{ SeList }}"
