@@ -1,0 +1,35 @@
+# ansible-playbook create_avi_lsc_user.yml
+---
+- hosts: localhost
+  connection: local
+
+  vars_files:
+    - vars/creds.yml
+
+  vars:
+    SeSshKey: "{{ lookup('file', '{{ SEKeyFile }}') }}"
+
+  roles:
+    - role: avinetworks.avisdk
+
+  tasks:
+    - name: Create a Cloud Connector User
+      avi_cloudconnectoruser:
+        controller: "{{ avi_credentials.controller }}"
+        username: "{{ avi_credentials.username }}"
+        password: "{{ avi_credentials.password }}"
+        api_version: "{{ avi_credentials.api_version }}"
+        private_key: "{{ SeSshKey }}"
+        name: "{{ SEuser }}"
+  
+    # - name: sudo curl command for the controller
+    #   become: true
+    #   shell: |
+    #     curl -ks https://"{{ avi_credentials.controller }}":443/api/linux_host_install?username="{{ SEuser }}" | sudo bash
+  
+    #   register: shellvalue
+  
+    # - name: show output
+    #   debug:
+    #     var: shellvalue.stdout
+  
