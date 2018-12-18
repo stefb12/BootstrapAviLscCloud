@@ -1,0 +1,25 @@
+# credentials and datas for avi controller
+#
+
+avi_controller: 10.1.2.3
+avi_username: ansible
+avi_password: Admin123%$
+api_version: 18.1.5
+
+avi_credentials:
+  controller: 10.1.2.3
+  username: ansible
+  password: Admin123%$
+  api_version: 18.1.5
+#
+AviCloudName: Default-Cloud
+# 
+SEKeyFile: xxx.pem
+SEuser: centos
+#
+AviSeTenant: admin
+SEgroupname: Default-Group
+AviSeCpu: 1
+AviSeMem: 2
+AviSeDpdk: False
+#
