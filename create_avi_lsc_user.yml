@@ -23,14 +23,4 @@
         name: "{{ SEuser }}"
         # password: Abcd1234
   
-    # - name: sudo curl command for the controller
-    #   become: true
-    #   shell: |
-    #     curl -ks https://"{{ avi_credentials.controller }}":443/api/linux_host_install?username="{{ SEuser }}" | sudo bash
-  
-    #   register: shellvalue
-  
-    # - name: show output
-    #   debug:
-    #     var: shellvalue.stdout
-  
+    
