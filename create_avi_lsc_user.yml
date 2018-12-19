@@ -21,6 +21,7 @@
         api_version: "{{ avi_credentials.api_version }}"
         private_key: "{{ SeSshKey }}"
         name: "{{ SEuser }}"
+        # password: Abcd1234
   
     # - name: sudo curl command for the controller
     #   become: true
